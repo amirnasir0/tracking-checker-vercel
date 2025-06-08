@@ -1,10 +1,7 @@
 {
   "type": "module",
   "dependencies": {
-    "puppeteer-core": "21.3.8",
-    "@sparticuz/chromium": "110.0.0"
-  },
-  "engines": {
-    "node": "18.x"
+    "@sparticuz/chromium": "110.0.0",
+    "puppeteer-core": "21.3.8"
   }
 }
