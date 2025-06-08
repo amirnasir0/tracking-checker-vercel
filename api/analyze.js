@@ -7,17 +7,21 @@ export default async function handler(req, res) {
       args: chromium.args,
       executablePath: await chromium.executablePath(),
       headless: chromium.headless,
-      defaultViewport: chromium.defaultViewport
+      defaultViewport: chromium.defaultViewport,
+      ignoreHTTPSErrors: true
     });
 
     const page = await browser.newPage();
-    await page.goto('https://example.com', { waitUntil: 'networkidle2' });
+    await page.goto('https://example.com', { waitUntil: 'domcontentloaded' });
     const title = await page.title();
-    await browser.close();
 
-    res.status(200).json({ success: true, title });
-  } catch (e) {
-    console.error(e);
-    res.status(500).json({ error: 'Failed to launch browser', reason: e.message });
+    await browser.close();
+    return res.status(200).json({ success: true, title });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({
+      error: 'Failed to launch browser',
+      reason: err.message
+    });
   }
 }
